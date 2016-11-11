@@ -1,0 +1,53 @@
+// https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=36
+
+#include <iostream>
+#include <stdio.h>
+
+using std::cin;
+using std::cout;
+using std::endl;
+
+int CycleLength(int k) {
+  size_t len = 0;
+  while(true) {
+    len ++;
+    if(k == 1) {
+      break;
+    }
+    else if(k % 2) {
+      k = 3 * k + 1;
+    }
+    else {
+      k /= 2;
+    }
+  }
+  return len;
+}
+
+int main(void) {
+  long int i, j, k;
+  bool flag = false;
+  while(scanf("%ld%ld", &i, &j) == 2) {
+    if(i > j) {
+      i = i ^ j;
+      j = i ^ j;
+      i = i ^ j;
+      flag = true;
+    }
+    int max = 0;
+    for(int y = i; y <= j; y++) {
+      int tmp = CycleLength(y);
+      if(tmp > max) {
+        max = tmp;
+      }
+    }
+    if(flag) {
+      i = i ^ j;
+      j = i ^ j;
+      i = i ^ j;
+      flag = false;
+    }
+    cout << i << ' ' << j << ' ' << max << endl;
+  }
+  return 0;
+}
